@@ -1,0 +1,5 @@
+#
+## find the peer port of transmission after a reboot of the server
+#
+
+/etc/e-smith/events/actions/nethserver-transmission-services-conf

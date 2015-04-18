@@ -1,0 +1,14 @@
+#
+#60Transmission force https
+#
+{
+my $name = ${'transmission-daemon'}{'Name'} || 'transmission';
+my $webnamedir = ${'transmission'}{'WebNameDir'} || 'dl-transmission';
+
+if ( $Port == 80 || ! defined $SslMode )
+{
+$OUT .= " RewriteEngine On\n";
+$OUT .= " RewriteRule ^/$name(/.*|\$)    https://%{HTTP_HOST}/$name\$1 [L,R]\n";
+$OUT .= " RewriteRule ^/$webnamedir(/.*|\$)    https://%{HTTP_HOST}/$webnamedir\$1 [L,R]\n";
+}
+}

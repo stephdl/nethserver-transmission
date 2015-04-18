@@ -1,0 +1,54 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks qw(:all);
+
+####################
+# links to add
+
+my $event = 'nethserver-transmission-update';
+
+# templates to expand
+    templates2events( "/etc/samba/smb.conf" , $event );
+    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+    templates2events("/etc/httpd/conf/httpd.conf", $event);
+    templates2events("/etc/rc.d/rc.local", $event);
+
+
+# services to launch on event
+event_services($event,
+    'httpd' => 'restart',
+    'smb'=>'restart',
+    'nmb'=>'restart');
+
+# actions to perform
+event_actions($event,
+    'initialize-default-databases' => '00',
+    'nethserver-transmission-services-conf' => '01');
+
+my $event = 'nethserver-transmission-save';
+    templates2events( "/etc/samba/smb.conf" , $event );
+    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+    templates2events("/etc/httpd/conf/httpd.conf", $event);
+
+# services to launch on event
+event_services($event,
+    'httpd' => 'restart',
+    'smb'=>'restart',
+    'nmb'=>'restart');
+
+# actions to perform
+event_actions($event,
+    'nethserver-transmission-services-conf' => '01');
+
+foreach my $event (qw ( user-create user-modify)) {
+    templates2events( "/etc/samba/smb.conf" , $event );
+    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+
+event_services($event,
+    'httpd' => 'restart',
+    'smb'=>'restart',
+    'nmb'=>'restart');
+}

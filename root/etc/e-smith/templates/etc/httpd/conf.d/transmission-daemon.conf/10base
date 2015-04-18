@@ -1,0 +1,36 @@
+{
+
+return '#  transmission-daemon  is  disabled' unless  ((${'transmission-daemon'}{'status'} || 'disabled') eq 'enabled');
+
+use esmith::AccountsDB;
+use esmith::DB;
+
+my $acc = esmith::AccountsDB->open_ro; 
+
+$OUT .= qq (
+
+    ProxyPass /${'transmission-daemon'}{Name} http://127.0.0.1:${'transmission-daemon'}{TCPPort}/${'transmission-daemon'}{Name}
+    ProxyPassReverse /${'transmission-daemon'}{Name} http://127.0.0.1:${'transmission-daemon'}{TCPPort}/${'transmission-daemon'}{Name}
+
+    <Location /${'transmission-daemon'}{Name}>
+        AuthName "transmission-daemon"
+        AuthBasicProvider external
+        AuthType Basic
+        order deny,allow
+        deny from all
+        allow from $localAccess
+        Satisfy all
+        AuthExternal pwauth
+);
+
+$OUT .= "        require user ";
+
+foreach my $user ($acc->users()) {
+    my $username = $user->key;
+    my $transuser = $user->prop('TransmissionWebUI') || 'disabled';
+    next unless  ($transuser eq 'enabled');
+    $OUT .= " $username";
+}
+
+$OUT .= "\n    </Location>";
+}

@@ -1,0 +1,53 @@
+#!/usr/bin/perl -w
+
+use esmith::ConfigDB;
+use esmith::event;
+
+my $event = shift|| '';
+
+my $db = esmith::ConfigDB->open();
+my $status = $db->get_prop('transmission-daemon','status')|| 'disabled';
+
+#Find the status of transmission-daemon service because the runlevel-adjust
+#doesn't work properly with it
+
+if ($status eq 'enabled') {
+    system ('chkconfig transmission-daemon  on');
+    system ('/sbin/service transmission-daemon restart');
+
+    #Now we want to retrieve options in settings.json
+    sleep 3;
+
+    open( my $fh, '<', '/var/lib/transmission/settings.json' ) or die "Can't open filename: $!";
+
+    while ( defined (my  $var = <$fh>) ) {
+        if ($var =~ /"peer-port"/ ) {
+            $var =~ s/(peer-port|:|,|"|\s)//g;
+            $db->set_prop('transmission','TCPPort',$var);
+        }
+
+        if ($var =~ /"rpc-port"/ ) {
+            $var =~ s/(rpc-port|:|,|"|\s)//g;
+            $db->set_prop('transmission-daemon','TCPPort',$var);
+        }
+
+        if ($var =~ /"rpc-url"/ ) {
+            $var =~ s/(rpc-url|\/|:|,|"|\s)//g;
+            $db->set_prop('transmission-daemon','Name',$var);
+        }
+
+        if ($var =~ /"download-dir"/ ) {
+            $var =~ s/(download-dir|:|,|"|\s)//g;
+            $db->set_prop('transmission','DownloadDir',$var);
+        }
+    }
+
+    close $fh;
+
+    event_signal('firewall-adjust') unless ($event eq 'nethserver-transmission-update');
+}
+
+else {
+    system ('/sbin/service transmission-daemon stop');
+    event_signal('runlevel-adjust');
+}
