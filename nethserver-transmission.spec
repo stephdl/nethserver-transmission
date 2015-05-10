@@ -65,7 +65,7 @@ echo "
  Stephane de Labrusse Alias Stephdl
 "
 %changelog
-* Mon May 4 2015 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-1
+* Sun May 10 2015 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-1
 - Initial release to Nethserver
 
 * Fri Dec 27 2014 Stephane de Labrusse  <stephdl@de-labrusse.fr> 0.0.3-1
