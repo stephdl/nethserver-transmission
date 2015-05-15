@@ -1,6 +1,6 @@
 %define name nethserver-transmission
 %define version 1.0.1
-%define release 1
+%define release 2
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -65,6 +65,9 @@ echo "
  Stephane de Labrusse Alias Stephdl
 "
 %changelog
+* Fri May 15 2015 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-2
+- now transmission key is set as a 'configuration' type
+
 * Sun May 10 2015 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-1
 - Initial release to Nethserver
 
