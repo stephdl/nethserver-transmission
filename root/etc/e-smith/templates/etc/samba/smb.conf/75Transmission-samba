@@ -1,41 +1,43 @@
-{ my $status = $transmission{'status'} || "disabled";
+{
+use NethServer::SSSD;
+our $sssd = new NethServer::SSSD();
+
+my $status = $transmission{'status'} || "disabled";
     return "    # transmission is disabled in smb.conf"
            unless $status eq 'enabled';
 
-use esmith::AccountsDB;
-use esmith::DB;
-
-my $acc = esmith::AccountsDB->open_ro; 
 my $name = $transmission{'Name'} || 'transmission';
 my $dlfolder = $transmission{'DownloadDir'} || '/var/lib/transmission/Downloads';
 
-$OUT .= qq (
-#
-# Transmission samba share
-#
-[$name]
-comment = Transmission download folder
-path = $dlfolder
-);
+if ($sssd->isAD()) {
+
+    $OUT .= qq (
+    #
+    # Transmission samba share
+    #
+    [$name]
+    comment = Transmission download folder
+    path = $dlfolder
+    );
 
 
-$OUT .= "valid users =  ";
-foreach my $user ($acc->users()) {
-    my $username = $user->key;
-    my $transuser = $user->prop('TransmissionSmbFolder') || 'disabled';
-    next unless  ($transuser eq 'enabled');
-    $OUT .= " $username";
-}
+    my @Suser = split(/\s+/, (${'transmission-daemon'}{'SmbUsers'} || ""));
+    my $Suser ="admin admin\@$DomainName";
+    foreach (@Suser) {
+        $Suser = $Suser . ' ' . $_;
+    }
+    $OUT .= "        valid users =  $Suser\n";
 
-$OUT .=  qq (
 
-force user = transmission
-force group = transmission
-read only = no
-browseable = yes
-writeable = yes
-create mode = 0644
-directory mask = 0755
-);
+    $OUT .=  qq (
 
+    force user = transmission
+    force group = transmission
+    read only = no
+    browseable = yes
+    writeable = yes
+    create mode = 0644
+    directory mask = 0755
+    );
+    }
 }

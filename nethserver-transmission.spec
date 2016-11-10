@@ -1,6 +1,6 @@
 %define name nethserver-transmission
-%define version 1.0.1
-%define release 2
+%define version 1.1.0
+%define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -13,9 +13,9 @@ Source: %{name}-%{version}.tar.gz
 BuildArchitectures: noarch
 BuildRoot: /var/tmp/%{name}-%{version}-buildroot
 BuildRequires: nethserver-devtools
-Requires: nethserver-ibays nethserver-samba nethserver-directory nethserver-httpd
-Requires: pwauth mod_authnz_external
-Requires: transmission >= 2.84
+Requires: nethserver-ibays nethserver-samba nethserver-httpd
+Requires: mod_authnz_pam
+Requires: transmission >= 2.92
 AutoReqProv: no
 
 %description
@@ -34,9 +34,8 @@ perl createlinks
 rm -rf $RPM_BUILD_ROOT
 (cd root ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-filelist
-/sbin/e-smith/genfilelist \
+%{genfilelist} \
     --dir /var/lib/transmission/Downloads 'attr(0775,transmission,transmission)' \
-    --dir /var/lib/transmission 'attr(0775,transmission,transmission)' \
  $RPM_BUILD_ROOT \
      > %{name}-%{version}-filelist
 
@@ -46,6 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
 
+%dir %{_nseventsdir}/%{name}-update
 %pre
 
 %post
@@ -65,6 +65,9 @@ echo "
  Stephane de Labrusse Alias Stephdl
 "
 %changelog
+* Fri Nov 18 2016 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.0-1
+- NS7 version
+
 * Fri May 15 2015 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-2
 - now transmission key is set as a 'configuration' type
 

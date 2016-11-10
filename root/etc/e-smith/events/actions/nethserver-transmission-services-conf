@@ -12,8 +12,8 @@ my $status = $db->get_prop('transmission-daemon','status')|| 'disabled';
 #doesn't work properly with it
 
 if ($status eq 'enabled') {
-    system ('chkconfig transmission-daemon  on');
-    system ('/sbin/service transmission-daemon restart');
+    system ('/usr/bin/systemctl enable transmission-daemon');
+    system ('/usr/bin/systemctl restart transmission-daemon');
 
     #Now we want to retrieve options in settings.json
     sleep 3;

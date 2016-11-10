@@ -2,53 +2,56 @@
 
 return '#  transmission-WebDL  is  disabled' unless  ((${'transmission'}{'status'} || 'disabled') eq 'enabled') ;
 
-use esmith::AccountsDB;
-#use esmith::DB;
 use esmith::ConfigDB;
-
-
-my $acc = esmith::AccountsDB->open_ro; 
 my $c = esmith::ConfigDB->open;
-
 
 my $transmissionDIR = $c->get_prop('transmission','DownloadDir') || '/var/lib/transmission/Downloads';
 my $name = $c->get_prop('transmission','WebNameDir') || 'dl-transmission';
+my $webaccess = $c->get_prop('transmission','Webaccess')||'private';
 
 $OUT .= qq (
     Alias /$name    $transmissionDIR
-    <Directory $transmissionDIR/>
-        Options Indexes
-        order deny,allow
-        deny from all
-        SSLRequireSSL
+
+    <IfModule !authnz_pam_module>
+    LoadModule authnz_pam_module modules/mod_authnz_pam.so
+    </IfModule>
+
+    <Location /$name>
+    AuthName "$name"
+    AuthType Basic
+    AuthBasicProvider PAM
+    AuthPAMService transmission
 );
 
-my $webaccess = $c->get_prop('transmission','Webaccess')||'private';
+    my @TWuser = split(/\s+/, ($transmission{'Users'} || ""));
+    my $TWuser ="admin admin\@$DomainName";
+    foreach (@TWuser) {
+        $TWuser = $TWuser . ' ' . $_;
+    }
+
+    $OUT .= "    Require user $TWuser\n";
+    $OUT .= "    </Location>\n";
+
+    $OUT .= qq (
+    <Directory $transmissionDIR/>
+    Options Indexes
+    SSLRequireSSL
+);
+
 
 if ($webaccess eq 'private')
     {       
-    $OUT .= "       allow from $localAccess\n";
+    $OUT .= "    require ip  $localAccess\n";
     } 
 
 elsif ($webaccess eq 'public')
-   {
-   $OUT .= "        allow from all\n";
-   }
+    {
+    $OUT .= "    require all granted\n";
+    }
 
-$OUT .= qq (
-        AuthName "$name"
-        AuthBasicProvider external
-        AuthType Basic
-        AuthExternal pwauth
-);
-$OUT .= "        require user  ";
-
-foreach my $user ($acc->users()) {
-    my $username = $user->key;
-    my $transuser = $user->prop('TransmissionWebFolder')|| 'disabled';
-    next unless  ($transuser eq 'enabled');
-    $OUT .= " $username";
-}
+else {
+     $OUT .= "    require all denied\n";
+     }
 
 $OUT .= "\n    </Directory>";
 }
