@@ -13,8 +13,8 @@ Source: %{name}-%{version}.tar.gz
 BuildArchitectures: noarch
 BuildRoot: /var/tmp/%{name}-%{version}-buildroot
 BuildRequires: nethserver-devtools
-Requires: nethserver-ibays nethserver-samba nethserver-directory nethserver-httpd
-Requires: pwauth mod_authnz_external
+Requires: nethserver-ibays nethserver-samba nethserver-httpd
+Requires: mod_authnz_pam
 Requires: transmission >= 2.84
 AutoReqProv: no
 
@@ -34,9 +34,7 @@ perl createlinks
 rm -rf $RPM_BUILD_ROOT
 (cd root ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-filelist
-/sbin/e-smith/genfilelist \
-    --dir /var/lib/transmission/Downloads 'attr(0775,transmission,transmission)' \
-    --dir /var/lib/transmission 'attr(0775,transmission,transmission)' \
+%{genfilelist} \
  $RPM_BUILD_ROOT \
      > %{name}-%{version}-filelist
 
@@ -46,6 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
 
+%dir %{_nseventsdir}/%{name}-update
 %pre
 
 %post

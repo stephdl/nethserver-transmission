@@ -11,7 +11,7 @@ my $event = 'nethserver-transmission-update';
     templates2events( "/etc/samba/smb.conf" , $event );
     templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
     templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
-    templates2events("/etc/httpd/conf/httpd.conf", $event);
+    templates2events("/etc/httpd/conf.d/default-virtualhost.inc", $event);
     templates2events("/etc/rc.d/rc.local", $event);
 
 

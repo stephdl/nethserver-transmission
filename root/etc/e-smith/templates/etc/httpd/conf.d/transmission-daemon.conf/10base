@@ -2,35 +2,46 @@
 
 return '#  transmission-daemon  is  disabled' unless  ((${'transmission-daemon'}{'status'} || 'disabled') eq 'enabled');
 
-use esmith::AccountsDB;
-use esmith::DB;
-
-my $acc = esmith::AccountsDB->open_ro; 
+my $webaccess = ${'transmission-daemon'}{'Webaccess'} || 'private';
 
 $OUT .= qq (
 
     ProxyPass /${'transmission-daemon'}{Name} http://127.0.0.1:${'transmission-daemon'}{TCPPort}/${'transmission-daemon'}{Name}
     ProxyPassReverse /${'transmission-daemon'}{Name} http://127.0.0.1:${'transmission-daemon'}{TCPPort}/${'transmission-daemon'}{Name}
 
+    <IfModule !authnz_pam_module>
+    LoadModule authnz_pam_module modules/mod_authnz_pam.so
+    </IfModule>
+
     <Location /${'transmission-daemon'}{Name}>
         AuthName "transmission-daemon"
-        AuthBasicProvider external
         AuthType Basic
+        Satisfy all
+        AuthBasicProvider PAM
+        AuthPAMService transmission
         order deny,allow
         deny from all
-        allow from $localAccess
-        Satisfy all
-        AuthExternal pwauth
 );
 
-$OUT .= "        require user ";
+if ($webaccess eq 'private')
+    {
+    $OUT .= "        allow from  $localAccess\n";
+    }
 
-foreach my $user ($acc->users()) {
-    my $username = $user->key;
-    my $transuser = $user->prop('TransmissionWebUI') || 'disabled';
-    next unless  ($transuser eq 'enabled');
-    $OUT .= " $username";
-}
+elsif ($webaccess eq 'public')
+    {
+    $OUT .= "        allow from all\n";
+    }
 
-$OUT .= "\n    </Location>";
+else {
+     $OUT .= "       allow from none\n";
+     }
+
+    my @TDuser = split(/\s+/, (${'transmission-daemon'}{'DaemonUsers'} || ""));
+    my $TDuser ="admin admin\@$DomainName";
+    foreach (@TDuser) {
+        $TDuser = $TDuser . ' ' . $_;
+    }
+    $OUT .= "        Require user $TDuser\n";
+    $OUT .= "\n    </Location>";
 }
