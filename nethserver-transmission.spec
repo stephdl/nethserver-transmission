@@ -35,6 +35,7 @@ rm -rf $RPM_BUILD_ROOT
 (cd root ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-filelist
 %{genfilelist} \
+    --dir /var/lib/transmission/Downloads 'attr(0775,transmission,transmission)' \
  $RPM_BUILD_ROOT \
      > %{name}-%{version}-filelist
 
