@@ -23,7 +23,7 @@ $OUT .= qq (
     AuthPAMService transmission
 );
 
-    my @TWuser = split(/\s+/, ($transmission{'DownloadUsers'} || ""));
+    my @TWuser = split(/\s+/, ($transmission{'Users'} || ""));
     my $TWuser ="admin admin\@$DomainName";
     foreach (@TWuser) {
         $TWuser = $TWuser . ' ' . $_;

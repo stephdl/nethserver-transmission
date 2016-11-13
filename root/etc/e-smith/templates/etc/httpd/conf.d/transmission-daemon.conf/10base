@@ -1,8 +1,8 @@
 {
 
-return '#  transmission-daemon  is  disabled' unless  ((${'transmission-daemon'}{'status'} || 'disabled') eq 'enabled');
+return '#  transmission-daemon  is  disabled' unless  ((${'transmission'}{'status'} || 'disabled') eq 'enabled');
 
-my $webaccess = ${'transmission-daemon'}{'Webaccess'} || 'private';
+my $webaccess = ${'transmission'}{'Webaccess'} || 'private';
 
 $OUT .= qq (
 
@@ -14,6 +14,7 @@ $OUT .= qq (
     </IfModule>
 
     <Location /${'transmission-daemon'}{Name}>
+        SSLRequireSSL
         AuthName "transmission-daemon"
         AuthType Basic
         Satisfy all
@@ -37,7 +38,7 @@ else {
      $OUT .= "       allow from none\n";
      }
 
-    my @TDuser = split(/\s+/, (${'transmission-daemon'}{'DaemonUsers'} || ""));
+    my @TDuser = split(/\s+/, (${'transmission'}{'Users'} || ""));
     my $TDuser ="admin admin\@$DomainName";
     foreach (@TDuser) {
         $TDuser = $TDuser . ' ' . $_;
