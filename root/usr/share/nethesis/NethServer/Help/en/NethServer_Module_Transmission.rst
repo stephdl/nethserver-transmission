@@ -1,10 +1,10 @@
 
-====================
+=====================
 Transmission Settings
-====================
+=====================
 
 Manage the Transmission Access
-=============================
+==============================
 
 Transmission is a BitTorrent client
 
