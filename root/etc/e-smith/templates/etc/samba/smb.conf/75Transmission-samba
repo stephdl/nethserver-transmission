@@ -40,4 +40,24 @@ if ($sssd->isAD()) {
     directory mask = 0755
     );
     }
+
+elsif ($sssd->isLdap()) {
+
+    $OUT .= qq (
+    #
+    # Transmission samba share
+    #
+    [$name]
+    comment = Transmission download folder
+    path = $dlfolder
+    force user = transmission
+    force group = transmission
+    read only = no
+    browseable = yes
+    writeable = yes
+    guest ok = yes
+    create mode = 0644
+    directory mask = 0755
+    );
+    }
 }
