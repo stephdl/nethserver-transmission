@@ -24,7 +24,8 @@ event_services($event,
 # actions to perform
 event_actions($event,
     'initialize-default-databases' => '00',
-    'nethserver-transmission-services-conf' => '01');
+    'nethserver-transmission-services-conf' => '01',
+    'nethserver-transmission-watchedDir-conf'=>'02');
 
 my $event = 'nethserver-transmission-save';
     templates2events( "/etc/samba/smb.conf" , $event );
@@ -40,4 +41,5 @@ event_services($event,
 
 # actions to perform
 event_actions($event,
-    'nethserver-transmission-services-conf' => '01');
+    'nethserver-transmission-services-conf' => '01',
+    'nethserver-transmission-watchedDir-conf'=>'02');

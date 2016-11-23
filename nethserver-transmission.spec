@@ -1,6 +1,6 @@
 %define name nethserver-transmission
-%define version 1.1.0
-%define release 2
+%define version 1.1.1
+%define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -65,6 +65,9 @@ echo "
  Stephane de Labrusse Alias Stephdl
 "
 %changelog
+* Wed Nov 23 2016 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.1-1.ns7
+- A watched directory is now created for torrent file
+
 * Mon Nov 21 2016 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.0-2
 - Samba guest access allowed when ldap is the account provider
 
