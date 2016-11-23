@@ -20,6 +20,6 @@ make_path("$downloaddir/torrentwatch", {
 
 #push the configuration to transmission daemon settings
 
-system ('/usr/bin/systemctl stop transmission-daemon');
+system ('/sbin/service transmission-daemon stop');
 my @error = `sed -i '/}/i \,"watch-dir": "$downloaddir/torrentwatch/", \    "watch-dir-enabled": true' /var/lib/transmission/settings.json`;
-system ('/usr/bin/systemctl start transmission-daemon');
+system ('/sbin/service transmission-daemon start ');
