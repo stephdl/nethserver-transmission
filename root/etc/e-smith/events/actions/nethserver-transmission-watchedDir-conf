@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+
+use esmith::ConfigDB;
+use esmith::event;
+use File::Path qw(make_path);
+
+my $event = shift|| '';
+
+my $db = esmith::ConfigDB->open();
+my $downloaddir = $db->get_prop('transmission','DownloadDir')|| '/var/lib/transmission/Downloads';
+
+#create the watched  dir for torrent file
+
+make_path("$downloaddir/torrentwatch", {
+      chmod => 0755,
+      group => 'transmission',
+      owner => 'transmission',
+});
+
+
+#push the configuration to transmission daemon settings
+
+system ('/sbin/service transmission-daemon stop');
+my @error = `sed -i '/}/i \,"watch-dir": "$downloaddir/torrentwatch/", \    "watch-dir-enabled": true' /var/lib/transmission/settings.json`;
+system ('/sbin/service transmission-daemon start ');
