@@ -1,6 +1,6 @@
 %define name nethserver-transmission
 %define version 1.1.1
-%define release 1
+%define release 2
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -15,7 +15,7 @@ BuildRoot: /var/tmp/%{name}-%{version}-buildroot
 BuildRequires: nethserver-devtools
 Requires: nethserver-ibays nethserver-samba nethserver-httpd
 Requires: mod_authnz_pam
-Requires: transmission >= 2.92
+Requires: transmission, transmission-cli, transmission-common, transmission-daemon
 AutoReqProv: no
 
 %description
@@ -65,6 +65,9 @@ echo "
  Stephane de Labrusse Alias Stephdl
 "
 %changelog
+* Mon Feb 06 2017 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.1-2.ns7
+- Force all transmission dependencies in this spec file
+
 * Wed Nov 23 2016 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.1-1.ns7
 - A watched directory is now created for torrent file
 
