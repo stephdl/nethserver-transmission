@@ -1,6 +1,6 @@
 %define name nethserver-transmission
-%define version 1.1.1
-%define release 2
+%define version 1.1.2
+%define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -50,21 +50,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 
-echo "
- Hi
-
- All my development work is done in my free time and from my own expenses. 
- If you consider my work as something helpful, thank you to kindly make 
- a donation to my paypal account and allow me to continue paying my server 
- and all associated costs.
-
- https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZPK8FKHVT4TY8
-
- Thank in advance.
- 
- Stephane de Labrusse Alias Stephdl
-"
 %changelog
+* Wed Mar 15 2017 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.2-1.ns7
+- Use samba guest access, even if nethserver-directory is not installed
+
 * Mon Feb 06 2017 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.1.1-2.ns7
 - Force all transmission dependencies in this spec file
 
