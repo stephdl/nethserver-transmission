@@ -17,7 +17,7 @@ my $event = 'nethserver-transmission-update';
 
 # services to launch on event
 event_services($event,
-    'httpd' => 'restart',
+    'httpd' => 'reload',
     'smb'=>'restart',
     'nmb'=>'restart');
 
@@ -35,7 +35,7 @@ my $event = 'nethserver-transmission-save';
 
 # services to launch on event
 event_services($event,
-    'httpd' => 'restart',
+    'httpd' => 'reload',
     'smb'=>'restart',
     'nmb'=>'restart');
 
@@ -43,3 +43,9 @@ event_services($event,
 event_actions($event,
     'nethserver-transmission-services-conf' => '01',
     'nethserver-transmission-watchedDir-conf'=>'02');
+
+
+my $event = 'trusted-networks-modify';
+    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+
