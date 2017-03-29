@@ -54,3 +54,8 @@ event_services($event,
     'smb'=>'restart',
     'nmb'=>'restart');
 }
+
+my $event = 'trusted-networks-modify';
+    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+

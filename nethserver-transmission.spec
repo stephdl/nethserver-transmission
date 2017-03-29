@@ -1,6 +1,6 @@
 %define name nethserver-transmission
-%define version 1.0.2
-%define release 2
+%define version 1.0.3
+%define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -51,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %changelog
+* Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.3-1.ns6
+- Template expansion on trusted-network
+
 * Wed Nov 23 2016 Stephane de Labrusse  <stephdl@de-labrusse.fr> 1.0.1-1.ns6
 - A watched directory is now created for torrent file
 
