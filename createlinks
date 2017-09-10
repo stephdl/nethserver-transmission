@@ -56,6 +56,6 @@ event_services($event,
 }
 
 my $event = 'trusted-networks-modify';
-    templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
-    templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
-
+templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
+templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
+event_services($event, 'httpd' => 'reload');
