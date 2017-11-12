@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.4
+%define version 1.1.5
 %define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -51,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %changelog
+* Sun Nov 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.5-1.ns7
+- user name validation
+
 * Sun Sep 10 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.4-1.ns7
 - Restart httpd service on trusted-network
 
