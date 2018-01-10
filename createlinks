@@ -41,8 +41,7 @@ event_services($event,
 # actions to perform
 event_actions($event,
     'nethserver-transmission-services-conf' => '01',
-    'nethserver-transmission-watchedDir-conf'=>'02',
-    'firewall-adjust'=>'90');
+    'nethserver-transmission-watchedDir-conf'=>'02');
 
 
 my $event = 'trusted-networks-modify';
