@@ -1,0 +1,15 @@
+
+#
+# 40 Transmission peer port
+#
+
+{
+my $status = $transmission{'status'} || 'disabled';
+
+return "#Transmission peer port is disabled\n"
+    unless ($status eq 'enabled');
+
+    $OUT .= "# Enable Transmission peer port from red interfaces\n";
+    $OUT .= "?COMMENT Enable Transmission peer port from red interfaces\n";
+    $OUT .= "ACCEPT\tnet\t\$FW\ttcp\t$transmission{'TCPPort'}\n";
+}
