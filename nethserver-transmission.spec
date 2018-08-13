@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.6
+%define version 1.1.7
 %define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -51,6 +51,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %changelog
+* Mon Aug 13 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.7-1.ns7
+- The transmission dependency is removed, no GTK needs
+- Thanks to Mark Verlinde markVnl
+
 * Wed Jan 10 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.6-1.ns7
 - Open the peer port directly in shorewall
 
