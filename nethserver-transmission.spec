@@ -15,7 +15,7 @@ BuildRoot: /var/tmp/%{name}-%{version}-buildroot
 BuildRequires: nethserver-devtools
 Requires: nethserver-ibays nethserver-samba nethserver-httpd
 Requires: mod_authnz_pam
-Requires: transmission, transmission-cli, transmission-common, transmission-daemon
+Requires: transmission-cli, transmission-common, transmission-daemon
 AutoReqProv: no
 
 %description
