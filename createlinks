@@ -26,7 +26,7 @@ event_actions($event,
     'nethserver-transmission-services-conf' => '01',
     'nethserver-transmission-watchedDir-conf'=>'02');
 
-my $event = 'nethserver-transmission-save';
+$event = 'nethserver-transmission-save';
     templates2events( "/etc/samba/smb.conf" , $event );
     templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
     templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
@@ -45,13 +45,13 @@ event_actions($event,
     'firewall-adjust'=>'90');
 
 
-my $event = 'trusted-networks-modify';
+ $event = 'trusted-networks-modify';
 templates2events("/etc/httpd/conf.d/transmission-daemon.conf", $event);
 templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
 event_services($event, 'httpd' => 'reload');
 
 
-my $event = 'nethserver-sssd-save';
+$event = 'nethserver-sssd-save';
 templates2events("/etc/samba/smb.conf", $event);
 event_services($event,
     'smb'=>'restart',
