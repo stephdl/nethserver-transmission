@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.7
+%define version 1.1.8
 %define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -51,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %changelog
+* Fri Oct 12 2018 stephane de labrusse <stephdl@de-labrusse.fr> 1.1.8-1.ns7
+- Subscribe to the nethserver-sssd-save event
+
 * Mon Aug 13 2018 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.7-1.ns7
 - The transmission dependency is removed, no GTK needs
 - Thanks to Mark Verlinde markVnl
