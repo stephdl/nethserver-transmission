@@ -51,7 +51,7 @@ templates2events("/etc/httpd/conf.d/transmission-WebDL.conf", $event);
 event_services($event, 'httpd' => 'reload');
 
 
-my $event = 'nethserver-sssd-save'
+my $event = 'nethserver-sssd-save';
 templates2events("/etc/samba/smb.conf", $event);
 event_services($event,
     'smb'=>'restart',
