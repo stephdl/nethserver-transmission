@@ -18,7 +18,7 @@ if ($status eq 'enabled') {
     #Now we want to retrieve options in settings.json
     sleep 3;
 
-    open( my $fh, '<', '/var/lib/transmission/settings.json' ) or die "Can't open filename: $!";
+    open( my $fh, '<', '/var/lib/transmission/.config/transmission-daemon/settings.json' ) or die "Can't open filename: $!";
 
     while ( defined (my  $var = <$fh>) ) {
         if ($var =~ /"peer-port"/ ) {
