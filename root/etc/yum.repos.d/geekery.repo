@@ -1,0 +1,8 @@
+[geekery]
+name=geekery repository for EL7 - $basearch
+#baseurl=http://geekery.altervista.org/geekery/el7/$basearch
+mirrorlist=http://geekery.altervista.org/geekery/el7-mirrors
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/GEEKERY-GPG-KEY

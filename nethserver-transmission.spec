@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.9
+%define version 1.1.10
 %define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -54,7 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Mar 11 2019 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.9-1.ns7
 - Action to push configuration to json file
 - Added rpc-host-whitelist values in json file
-- Json file is at /var/lib/transmission/.config/transmission-daemon/settings.json
+- added definition of geekery.repo
 
 * Fri Oct 12 2018 stephane de labrusse <stephdl@de-labrusse.fr> 1.1.8-1.ns7
 - Subscribe to the nethserver-sssd-save event
