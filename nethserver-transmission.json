@@ -1,0 +1,26 @@
+{
+  "id": "nethserver-transmission",
+  "name": "Transmission",
+  "summary": "A fast, easy, and free bitTorrent client",
+  "description": "A fast, easy, and free bitTorrent client",
+  "url": "",
+  "homepage": "https://github.com/stephdl/nethserver-transmission",
+  "provides": ["nethserver-transmission"],
+  "release": {
+    "version": "_RELEASE_"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/stephdl/dev/issues"
+  },
+  "author": {
+    "name": "Stephane de Labrusse",
+    "url": "https://github.com/stephdl/nethserver-transmission",
+    "email": "stephdl@de-labrusse.fr"
+  },
+  "infoapi": {
+    "path": "nethserver-transmission/read"
+  },
+  "icon": "logo.png",
+  "external": true
+}

@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.11
+%define version 1.1.12
 %define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -29,10 +29,20 @@ transmission is an application adapted as a contrib for nethserver, to help the 
 %{makedocs}
 perl createlinks
 %{__mkdir_p} root/var/lib/transmission/Downloads
+sed -i 's/_RELEASE_/%{version}/' %{name}.json
 
 %install
 rm -rf $RPM_BUILD_ROOT
 (cd root ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
+
+mkdir -p %{buildroot}/usr/share/cockpit/%{name}/
+mkdir -p %{buildroot}/usr/share/cockpit/nethserver/applications/
+mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
+cp -a manifest.json %{buildroot}/usr/share/cockpit/%{name}/
+cp -a logo.png %{buildroot}/usr/share/cockpit/%{name}/
+cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
+cp -a api/* %{buildroot}/usr/libexec/nethserver/api/%{name}/
+
 rm -f %{name}-%{version}-filelist
 %{genfilelist} \
     --dir /var/lib/transmission/Downloads 'attr(0775,transmission,transmission)' \
@@ -51,6 +61,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %changelog
+* Tue Oct 15 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.11-1.ns7
+- cockpit. added to legacy apps
+
 * Wed Mar 13 2019 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.10-1.ns7
 - specific repository for transmission
 
