@@ -1,6 +1,6 @@
 %define name nethserver-transmission
 %define version 1.1.13
-%define release 1
+%define release 2
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -61,9 +61,11 @@ rm -rf $RPM_BUILD_ROOT
 %post
 
 %postun
-/usr/bin/rm -f /etc/httpd/conf.d/transmission-daemon.conf
-/usr/bin/rm -f /etc/httpd/conf.d/transmission-WebDL.conf
-/usr/bin/systemctl reload httpd
+if [ $1 == 0 ] ; then
+    /usr/bin/rm -f /etc/httpd/conf.d/transmission-daemon.conf
+    /usr/bin/rm -f /etc/httpd/conf.d/transmission-WebDL.conf
+    /usr/bin/systemctl reload httpd
+fi
 
 %changelog
 * Sun Jul 05 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.13
