@@ -21,37 +21,37 @@
 #
 
 use strict;
-use warnings;
 use esmith::ConfigDB;
+use esmith::event;
 use JSON;
 use NethServer::ApiTools;
 
+my $eventName = 'nethserver-sogo-update';
+my @eventArgs = ();
+my $ret;
+
 my $input = NethServer::ApiTools::readInput();
 my $cmd = $input->{'action'};
-my $db = esmith::ConfigDB->open_ro();
 
-my $ret = {};
-
-if ( $cmd eq "app-info") {
-    my $status = $db->get_prop('transmission','status')|| 'disabled';
-    my $name = $db->get_prop('transmission-daemon','Name')|| 'transmission';
-    if ($status eq "enabled") {
-            my $host = $input->{'location'}->{'hostname'} || '';
-            $ret = {
-                'url' => "https://$host/$name"
-            }
+if ($cmd eq 'configuration') {
+    my $cdb = esmith::ConfigDB->open();
+    foreach  (qw(
+          Users
+          Webaccess
+          status
+    )) {
+      $cdb->set_prop('transmission', $_, $input->{$_});
     }
+} else {
+    error();
 }
 
-elsif ($cmd eq 'configuration') {
-    my %transmission = (
-        Users => $db->get_prop('transmission','Users') || '',
-        Webaccess => $db->get_prop('transmission','Webaccess') || 'private',
-        status => $db->get_prop('transmission','status') || 'disabled'
-    );
-    $ret->{'configuration'} = \%transmission;
+esmith::event::set_json_log(1);
+
+if(esmith::event::event_signal($eventName, @eventArgs)) {
+    NethServer::ApiTools::success();
 } else {
-    NethServer::ApiTools::error();
+    NethServer::ApiTools::error("EventError", "update_action_failed", 1559997785);
 }
 
 print encode_json($ret);
