@@ -21,7 +21,7 @@ if ($sssd->isAD()) {
     );
 
 
-    my @Suser = split(/\s+/, (${'transmission-daemon'}{'SmbUsers'} || ""));
+    my @Suser = split(/,/, ($transmission{'Users'} || ""));
     my $Suser ="admin admin\@$DomainName";
     foreach (@Suser) {
         $Suser = $Suser . ' ' . $_;
