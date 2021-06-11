@@ -3,6 +3,8 @@
 # nsapi_nethserver_transmission
 #
 Cmnd_Alias NSAPI_NETHSERVER_TRANSMISSION = \
-     /usr/libexec/nethserver/api/nethserver-transmission/read
+     /usr/libexec/nethserver/api/nethserver-transmission/read, \
+     /usr/libexec/nethserver/api/nethserver-transmission/update, \
+     /usr/libexec/nethserver/api/nethserver-transmission/validate
 
 Defaults!NSAPI_NETHSERVER_TRANSMISSION !requiretty
