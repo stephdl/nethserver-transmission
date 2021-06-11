@@ -1,5 +1,5 @@
 %define name nethserver-transmission
-%define version 1.1.13
+%define version 1.1.14
 %define release 2
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
@@ -68,6 +68,10 @@ if [ $1 == 0 ] ; then
 fi
 
 %changelog
+* Fri Jun 11 2021 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.14
+- Split with comma in templates
+- Use same users for smb and web
+
 * Sun Jul 05 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.13
 - Remove http templates after rpm removal
 

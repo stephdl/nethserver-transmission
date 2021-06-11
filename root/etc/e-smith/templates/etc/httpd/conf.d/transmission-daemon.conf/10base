@@ -38,7 +38,7 @@ else {
      $OUT .= "       allow from none\n";
      }
 
-    my @TDuser = split(/\s+/, (${'transmission'}{'Users'} || ""));
+    my @TDuser = split(/,/, (${'transmission'}{'Users'} || ""));
     my $TDuser ="admin admin\@$DomainName";
     foreach (@TDuser) {
         $TDuser = $TDuser . ' ' . $_;
