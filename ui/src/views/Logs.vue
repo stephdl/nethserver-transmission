@@ -31,7 +31,7 @@
           v-on:change="handleLogs()"
           :disabled="view.follow"
         >
-          <option selected>/var/log/sogo/sogo.log</option>
+          <option selected>/var/log/messages</option>
         </select>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-8">
@@ -106,11 +106,11 @@ mounted() {
 data() {
   return {
     view: {
-      path: "/var/log/sogo/sogo.log",
+      path: "/var/log/messages",
       logsLoaded: false,
       logsContent: "",
       follow: false,
-      filter: "",
+      filter: "transmission",
       lines: 100,
       process: null
     }
