@@ -10,6 +10,8 @@ Distribution: nethserver
 License: GNU GPL version 2
 Group: Neth/addon
 Source: %{name}-%{version}.tar.gz
+# Execute prep-sources to create Source1
+Source1:        %{name}.tar.gz
 BuildArchitectures: noarch
 BuildRoot: /var/tmp/%{name}-%{version}-buildroot
 BuildRequires: nethserver-devtools
@@ -38,6 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p %{buildroot}/usr/share/cockpit/%{name}/
 mkdir -p %{buildroot}/usr/share/cockpit/nethserver/applications/
 mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
+
+tar xvf %{SOURCE1} -C %{buildroot}/usr/share/cockpit/%{name}/
+
 cp -a manifest.json %{buildroot}/usr/share/cockpit/%{name}/
 cp -a logo.png %{buildroot}/usr/share/cockpit/%{name}/
 cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
