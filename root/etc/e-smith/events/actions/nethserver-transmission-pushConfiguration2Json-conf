@@ -25,6 +25,6 @@ make_path("$downloaddir/torrentwatch", {
 #push the configuration to transmission daemon settings
 
 system ('/usr/bin/systemctl stop transmission-daemon');
-my @error = `sed -i '/}/i \,"watch-dir": "$downloaddir/torrentwatch/", \    "watch-dir-enabled": true' /var/lib/transmission/settings.json`;
-my @rpcWatchedList = `sed -i '/}/i \,"rpc-host-whitelist": "$rpcWatchedList", \    "rpc-host-whitelist-enabled": true' /var/lib/transmission/settings.json`;
+my @error = `sed -i '/}/i \,"watch-dir": "$downloaddir/torrentwatch/", \    "watch-dir-enabled": true' /var/lib/transmission/.config/transmission-daemon/settings.json`;
+my @rpcWatchedList = `sed -i '/}/i \,"rpc-host-whitelist": "$rpcWatchedList", \    "rpc-host-whitelist-enabled": true' /var/lib/transmission/.config/transmission-daemon/settings.json`;
 system ('/usr/bin/systemctl start transmission-daemon');
