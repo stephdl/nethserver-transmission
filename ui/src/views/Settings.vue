@@ -1,14 +1,6 @@
 <template>
   <div>
     <h2>{{$t('settings.configuration')}}</h2>
-    <doc-info
-      :placement="'top'"
-      :title="$t('docs.sogo')"
-      :chapter="'sogo'"
-      :section="''"
-      :inline="false"
-      :lang="'en'"
-    ></doc-info>
     <div v-if="!view.isLoaded" class="spinner spinner-lg"></div>
     <div v-if="view.isLoaded">
       <form class="form-horizontal" v-on:submit.prevent="saveSettings('status')">
@@ -35,150 +27,34 @@
         </div>
         <div
           v-if="configuration.status"
-          :class="['form-group', errors.ActiveSync.hasError ? 'has-error' : '']"
+          :class="['form-group', errors.Webaccess.hasError ? 'has-error' : '']"
         >
           <label
             class="col-sm-2 control-label"
             for="textInput-modal-markup"
-          >{{$t('settings.ActiveSync')}}</label>
+          >{{$t('settings.Webaccess')}}</label>
           <div class="col-sm-5">
-            <input type="checkbox"   true-value="enabled" false-value="disabled" v-model="configuration.ActiveSync" class="form-control">
+            <input type="checkbox"   true-value="public" false-value="private" v-model="configuration.Webaccess" class="form-control">
             <span
-              v-if="errors.ActiveSync.hasError"
+              v-if="errors.Webaccess.hasError"
               class="help-block"
-            >{{errors.ActiveSync.message}}</span>
-          </div>
-        </div>
-        <div
-          v-if="configuration.status"
-          :class="['form-group', errors.Dav.hasError ? 'has-error' : '']"
-        >
-          <label
-            class="col-sm-2 control-label"
-            for="textInput-modal-markup"
-          >{{$t('settings.Dav')}}</label>
-          <div class="col-sm-5">
-            <input type="checkbox"   true-value="enabled" false-value="disabled" v-model="configuration.Dav" class="form-control">
-            <span
-              v-if="errors.Dav.hasError"
-              class="help-block"
-            >{{errors.Dav.message}}</span>
-          </div>
-        </div>
-        <div
-          v-if="configuration.status"
-          :class="['form-group', errors.MailAuxiliaryUserAccountsEnabled.hasError ? 'has-error' : '']"
-        >
-          <label
-            class="col-sm-2 control-label"
-            for="textInput-modal-markup"
-          >{{$t('settings.MailAuxiliaryUserAccountsEnabled')}}</label>
-          <div class="col-sm-5">
-            <input type="checkbox"   true-value="YES" false-value="NO" v-model="configuration.MailAuxiliaryUserAccountsEnabled" class="form-control">
-            <span
-              v-if="errors.MailAuxiliaryUserAccountsEnabled.hasError"
-              class="help-block"
-            >{{errors.MailAuxiliaryUserAccountsEnabled.message}}</span>
+            >{{errors.Webaccess.message}}</span>
           </div>
         </div>
         <div 
           v-if="configuration.status"
-          :class="['form-group', errors.AdminUsers.hasError ? 'has-error' : '']">
+          :class="['form-group', errors.Users.hasError ? 'has-error' : '']">
           <label
             class="col-sm-2 control-label"
             for="textInput-modal-markup"
-          >{{$t('settings.AdminUsers')}}
+          >{{$t('settings.Users')}}
           </label>
           <div class="col-sm-5">
-            <textarea v-model="configuration.AdminUsers" class="form-control"></textarea>
-            <span v-if="errors.AdminUsers.hasError" class="help-block">
+            <textarea v-model="configuration.Users" class="form-control"></textarea>
+            <span v-if="errors.Users.hasError" class="help-block">
               {{$t('validation.validation_failed')}}:
-              {{$t('validation.'+errors.AdminUsers.message)}}: {{errors.AdminUsers.value}}
+              {{$t('validation.'+errors.Users.message)}}: {{errors.Users.value}}
             </span>
-          </div>
-        </div>
-        <div v-if="configuration.status" class="form-group">
-          <legend class=" col-sm-2 control-label fields-section-header-pf" aria-expanded="true">
-            <span
-              :class="['fa fa-angle-right field-section-toggle-pf', advanced ? 'fa-angle-down' : '']"
-            ></span>
-            <a
-              class="field-section-toggle-pf"
-              @click="toggleAdvancedMode()"
-            >{{$t('settings.advanced_mode')}}</a>
-          </legend>
-        </div>
-        <div v-if="advanced">
-          <div 
-            v-if="configuration.status"
-            :class="['form-group', errors.Notifications.hasError ? 'has-error' : '']">
-            <label
-              class="col-sm-2 control-label"
-              for="textInput-modal-markup"
-            >{{$t('settings.Notifications')}}
-            </label>
-            <div class="col-sm-5">
-              <input type="checkbox" id="ACLs" value="ACLs" v-model="configuration.Notifications" class="form-control">
-              <label for="ACLs">{{$t('settings.ACLs')}}</label>
-              <input type="checkbox" id="Folders" value="Folders" v-model="configuration.Notifications" class="form-control">
-              <label for="Folders">{{$t('settings.Folders')}}</label>
-              <input type="checkbox" id="Appointment"  value="Appointment" v-model="configuration.Notifications" class="form-control">
-              <label for="Appointment">{{$t('settings.Appointment')}}</label>
-              <input type="checkbox" id="EMail"  value="EMail" v-model="configuration.Notifications" class="form-control">
-              <label for="EMail">{{$t('settings.Email')}}</label>
-              <span v-if="errors.Notifications.hasError" class="help-block">
-                {{$t('validation.validation_failed')}}:
-                {{$t('validation.'+errors.Notifications.message)}}
-              </span>
-            </div>
-          </div>
-          <div 
-            v-if="configuration.status"
-            :class="['form-group', errors.VirtualHost.hasError ? 'has-error' : '']">
-            <label
-              class="col-sm-2 control-label"
-              for="textInput-modal-markup"
-            >{{$t('settings.VirtualHost')}}
-            </label>
-            <div class="col-sm-5">
-              <input v-model="configuration.VirtualHost" class="form-control">
-              <span v-if="errors.VirtualHost.hasError" class="help-block">
-                {{$t('validation.validation_failed')}}:
-                {{$t('validation.'+errors.VirtualHost.message)}}
-              </span>
-            </div>
-          </div>
-          <div 
-            v-if="configuration.status"
-            :class="['form-group', errors.WOWorkersCount.hasError ? 'has-error' : '']">
-            <label
-              class="col-sm-2 control-label"
-              for="textInput-modal-markup"
-            >{{$t('settings.WOWorkersCount')}}
-            </label>
-            <div class="col-sm-5">
-              <input type="number" min="1" max="200" v-model="configuration.WOWorkersCount" class="form-control">
-              <span v-if="errors.WOWorkersCount.hasError" class="help-block">
-                {{$t('validation.validation_failed')}}:
-                {{$t('validation.'+errors.WOWorkersCount.message)}}
-              </span>
-            </div>
-          </div>
-          <div 
-            v-if="configuration.status"
-            :class="['form-group', errors.SOGoInternalSyncInterval.hasError ? 'has-error' : '']">
-            <label
-              class="col-sm-2 control-label"
-              for="textInput-modal-markup"
-            >{{$t('settings.SOGoInternalSyncInterval')}}
-            </label>
-            <div class="col-sm-5">
-              <input type="number" min="1" max="60" v-model="configuration.SOGoInternalSyncInterval" class="form-control">
-              <span v-if="errors.SOGoInternalSyncInterval.hasError" class="help-block">
-                {{$t('validation.validation_failed')}}:
-                {{$t('validation.'+errors.SOGoInternalSyncInterval.message)}}
-              </span>
-            </div>
           </div>
         </div>
         <div class="form-group">
@@ -211,10 +87,6 @@ export default {
     view: {
       isLoaded: false
     },
-    advanced: false,
-    // configuration: {
-    //         status: true
-    // },
     loaders: false,
     errors: this.initErrors()
   };
@@ -226,35 +98,11 @@ methods: {
         hasError: false,
         message: ""
       },
-      ActiveSync: {
+      Webaccess: {
         hasError: false,
         message: ""
       },
-      Dav: {
-        hasError: false,
-        message: ""
-      },
-      AdminUsers: {
-          haserror: false,
-          message:""
-      },
-      VirtualHost: {
-          haserror: false,
-          message:""
-      },
-      WOWorkersCount: {
-          haserror: false,
-          message:""
-      },
-      SOGoInternalSyncInterval: {
-          haserror: false,
-          message:""
-      },
-      MailAuxiliaryUserAccountsEnabled: {
-          haserror: false,
-          message:""
-      },
-      Notifications: {
+      Users: {
           haserror: false,
           message:""
       }
@@ -266,7 +114,7 @@ methods: {
     context.advanced = false;
     
     nethserver.exec(
-      ["nethserver-sogo/read"],
+      ["nethserver-transmission/read"],
       {
         action: "configuration"
       },
@@ -279,8 +127,7 @@ methods: {
         }
         context.configuration = success.configuration;
         context.configuration.status = success.configuration.status == "enabled";
-        context.configuration.AdminUsers = context.configuration.AdminUsers.split(",").join("\n");
-        context.configuration.Notifications = context.configuration.Notifications.split(",");
+        context.configuration.Users = context.configuration.Users.split(",").join("\n");
         context.view.isLoaded = true;
       },
       function(error) {
@@ -300,19 +147,13 @@ methods: {
       status: context.configuration.status
         ? "enabled"
         : "disabled",
-        ActiveSync: context.configuration.ActiveSync,
-        Dav: context.configuration.Dav,
-        AdminUsers: context.configuration.AdminUsers.split("\n").join(","),
-        VirtualHost: context.configuration.VirtualHost,
-        WOWorkersCount: context.configuration.WOWorkersCount,
-        SOGoInternalSyncInterval: context.configuration.SOGoInternalSyncInterval,
-        Notifications: context.configuration.Notifications.join(","),
-        MailAuxiliaryUserAccountsEnabled: context.configuration.MailAuxiliaryUserAccountsEnabled
+        Webaccess: context.configuration.Webaccess,
+        Users: context.configuration.Users.split("\n").join(",")
     };
     context.loaders = true;
     context.errors = context.initErrors();
     nethserver.exec(
-      ["nethserver-sogo/validate"],
+      ["nethserver-transmission/validate"],
       settingsObj,
       null,
       function(success) {
@@ -327,7 +168,7 @@ methods: {
         );
         // update values
         nethserver.exec(
-          ["nethserver-sogo/update"],
+          ["nethserver-transmission/update"],
           settingsObj,
           function(stream) {
             console.info("ddclient", stream);
