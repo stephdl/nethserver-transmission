@@ -57,6 +57,23 @@
             </span>
           </div>
         </div>
+        <div class="form-group" v-if="configuration.status">
+          <label
+            class="col-sm-2 control-label"
+            for="textInput-modal-markup"
+          >{{$t('settings.Link2DownloadDirectory')}}
+          </label>
+          <div class="col-sm-5">
+            <a
+              class="btn btn-link btn-lg"
+              target="_blank"
+              :href="getTransmissionUrl(filter)"
+            >
+              {{$t('settings.download_url')}}
+            </a>
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="col-sm-2 control-label" for="textInput-modal-markup">
             <div v-if="loaders" class="spinner spinner-sm form-spinner-loader adjust-top-loader"></div>
@@ -135,6 +152,13 @@ methods: {
           context.view.isLoaded = true;
       }
     );
+  },
+  getTransmissionUrl(filter) {
+      var context = this;
+      return (
+        "https://" +
+        window.location.hostname + "/" + context.configuration.WebNameDir
+      );
   },
   toggleStatus() {
     this.configuration.status = !this.configuration.status;

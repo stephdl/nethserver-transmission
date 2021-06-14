@@ -47,7 +47,8 @@ elsif ($cmd eq 'configuration') {
     my %transmission = (
         Users => $db->get_prop('transmission','Users') || '',
         Webaccess => $db->get_prop('transmission','Webaccess') || 'private',
-        status => $db->get_prop('transmission','status') || 'disabled'
+        status => $db->get_prop('transmission','status') || 'disabled',
+        WebNameDir => $db->get_prop('transmission','WebNameDir') || 'dl-transmission'
     );
     $ret->{'configuration'} = \%transmission;
 } else {
