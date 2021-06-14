@@ -43,8 +43,6 @@ mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
 
 tar xvf %{SOURCE1} -C %{buildroot}/usr/share/cockpit/%{name}/
 
-cp -a manifest.json %{buildroot}/usr/share/cockpit/%{name}/
-cp -a logo.png %{buildroot}/usr/share/cockpit/%{name}/
 cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
 cp -a api/* %{buildroot}/usr/libexec/nethserver/api/%{name}/
 

@@ -18,8 +18,8 @@
     "url": "https://github.com/stephdl/nethserver-transmission",
     "email": "stephdl@de-labrusse.fr"
   },
+  "icon": "logo.png",
   "infoapi": {
     "path": "nethserver-transmission/read"
-  },
-  "icon": "logo.png"
+  }
 }
