@@ -50,7 +50,7 @@
           >{{$t('settings.Users')}}
           </label>
           <div class="col-sm-5">
-            <textarea v-model="configuration.Users" class="form-control"></textarea>
+            <textarea rows="5" v-model="configuration.Users" class="form-control"></textarea>
             <span v-if="errors.Users.hasError" class="help-block">
               {{$t('validation.validation_failed')}}:
               {{$t('validation.'+errors.Users.message)}}: {{errors.Users.value}}
