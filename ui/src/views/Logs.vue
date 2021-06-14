@@ -110,7 +110,7 @@ data() {
       logsLoaded: false,
       logsContent: "",
       follow: false,
-      filter: "transmission",
+      filter: "[T|t]ransmission",
       lines: 100,
       process: null
     }
