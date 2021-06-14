@@ -25,7 +25,7 @@ $cdb = new EsmithDatabase('configuration');
 if ($data['action'] == 'configuration') {
     // settings validator
     $v->declareParameter('status',Validate::SERVICESTATUS);
-    $users = $v->createValidator(Validate::USERNAME);
+    $users = $v->createValidator()->orValidator($v->createValidator(Validate::USERNAME), $v->createValidator(Validate::EMPTYSTRING));
     foreach (explode(',',$data['Users']) as $u) {
         if (!$users->evaluate($u)) {
             $v->addValidationError('Users', 'not_valid_username', $u);
