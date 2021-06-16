@@ -1,6 +1,6 @@
 %define name nethserver-transmission
-%define version 1.1.14
-%define release 2
+%define version 1.1.15
+%define release 1
 Summary: transmission is a helpdesk system to download the Nethserver iso
 Name: %{name}
 Version: %{version}
@@ -71,6 +71,11 @@ if [ $1 == 0 ] ; then
 fi
 
 %changelog
+* Mon Jun 14 2021 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.15
+- Created a cockpit UI
+- we use epel version now 2.94-9.el7 
+- config path inherited from transmission epel version
+
 * Fri Jun 11 2021 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.14
 - Split with comma in templates
 - Use same users for smb and web

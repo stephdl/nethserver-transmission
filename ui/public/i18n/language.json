@@ -5,8 +5,10 @@
         "status":"Enable Transmission",
         "Users":"Allowed users (one user per line)",
         "Webaccess":"Public access to web interface",
-        "Link2DownloadDirectory":"Link to the downloads",
+        "Link2DownloadDirectory":"Download URL",
         "download_url":"Retrieve downloads",
+        "use_transmission_web_admin_page_url":"Torrent admin page",
+        "Link2TransmissionWebAdmin":"Transmission URL",
         "settings_updated_ok": "The settings have been well updated",
         "settings_updated_error": "The settings have not well updated"
     },
