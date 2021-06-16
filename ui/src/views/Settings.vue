@@ -73,6 +73,22 @@
             </a>
           </div>
         </div>
+        <div class="form-group" v-if="configuration.status">
+          <label
+            class="col-sm-2 control-label"
+            for="textInput-modal-markup"
+          >{{$t('settings.Link2TransmissionWebAdmin')}}
+          </label>
+          <div class="col-sm-5">
+            <a
+              class="btn btn-link btn-lg"
+              target="_blank"
+              :href="getTransmissionWebPanel(filter)"
+            >
+              {{$t('settings.use_transmission_web_admin_page_url')}}
+            </a>
+          </div>
+        </div>
 
         <div class="form-group">
           <label class="col-sm-2 control-label" for="textInput-modal-markup">
@@ -158,6 +174,13 @@ methods: {
       return (
         "https://" +
         window.location.hostname + "/" + context.configuration.WebNameDir
+      );
+  },
+  getTransmissionWebPanel(filter) {
+      var context = this;
+      return (
+        "https://" +
+        window.location.hostname + "/" + context.configuration.Name
       );
   },
   toggleStatus() {
